@@ -46,6 +46,9 @@ jobs:
             for f in web-ext-artifacts/*.zip; do mv "$f" "${f%.zip}.xpi"; done
             install="This .xpi is **not signed**: load it via about:debugging → This Firefox → Load Temporary Add-on… (removed on restart)."
           fi
+          # AMO returns a hashed file name – give the asset a readable one
+          version=$(node -p "require('./manifest.json').version")
+          mv web-ext-artifacts/*.xpi "web-ext-artifacts/hold-to-scroll-$version.xpi"
           ls -l web-ext-artifacts
           {
             echo "## Install"
