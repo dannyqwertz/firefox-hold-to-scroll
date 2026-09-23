@@ -8,10 +8,16 @@ var HoldToScrollKeys = (() => {
   const MODIFIERS = new Set(["Shift", "Control", "Alt", "AltGraph", "Meta", "OS"]);
   const isModifier = (key) => MODIFIERS.has(key);
 
+  // Mouse buttons are stored as "Mouse<MouseEvent.button>": left, middle, right
+  const MOUSE_BUTTONS = 3;
+  const mouseCode = (button) => (button < MOUSE_BUTTONS ? `Mouse${button}` : "");
+  const isMouse = (code) => /^Mouse\d$/.test(code);
+
   // Keys whose KeyboardEvent.key isn't a readable label get a translated name (message "key<code>")
   const NAMED = new Set([
     "Space", "Shift", "Control", "Meta", "AltLeft", "AltRight",
     "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+    "Mouse0", "Mouse1", "Mouse2",
   ]);
 
   // Printable keys show what the key produces on the user's layout (recorded as KeyboardEvent.key)
@@ -25,5 +31,5 @@ var HoldToScrollKeys = (() => {
     return name || code;
   }
 
-  return { normalize, isModifier, label };
+  return { normalize, isModifier, mouseCode, isMouse, label };
 })();

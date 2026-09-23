@@ -27,7 +27,7 @@
     "message": "Keys"
   },
   "keysHint": {
-    "message": "Hold the key and move the mouse – no click needed. In text fields, buttons and videos the key keeps its normal function."
+    "message": "Hold the key – or mouse button – and move the mouse. In text fields, buttons and videos it keeps its normal function."
   },
   "dragMode": {
     "message": "Drag mode"
@@ -44,8 +44,8 @@
   "pressKey": {
     "message": "Press a key …"
   },
-  "escCancels": {
-    "message": "Esc cancels."
+  "recordHint": {
+    "message": "Press a key – or click this field with the mouse button you want. Esc cancels."
   },
   "keyUsed": {
     "message": "$VALUE$ is already used for the other mode.",
@@ -60,6 +60,15 @@
   },
   "hintTab": {
     "message": "Note: outside the add-on, Tab still moves between links and fields."
+  },
+  "hintMouse0": {
+    "message": "A click without moving stays a click. To select text, hold Ctrl while dragging."
+  },
+  "hintMouse1": {
+    "message": "A middle-click without moving still opens links in a new tab. Firefox's own autoscroll is off for this button."
+  },
+  "hintMouse2": {
+    "message": "On Windows, a right-click without moving still opens the context menu. On Linux and macOS Firefox opens it on press – use Shift+right-click there (or set ui.context_menus.after_mouseup to true in about:config)."
   },
   "keyNotSet": {
     "message": "Not set"
@@ -84,6 +93,15 @@
   },
   "keyArrowRight": {
     "message": "Arrow Right"
+  },
+  "keyMouse0": {
+    "message": "Left mouse button"
+  },
+  "keyMouse1": {
+    "message": "Middle mouse button"
+  },
+  "keyMouse2": {
+    "message": "Right mouse button"
   },
   "keyNumpad": {
     "message": "Numpad $VALUE$",

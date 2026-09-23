@@ -1,5 +1,5 @@
-// Hold to Scroll: while the configured key is held, moving the mouse moves
-// the page – no mouse click needed.
+// Hold to Scroll: while the configured key (or mouse button) is held, moving
+// the mouse moves the page.
 //   Drag mode:   the page follows the mouse (like grabbing it).
 //   Scroll mode: direction and distance from an anchor point set direction and speed.
 (() => {
@@ -63,8 +63,9 @@
   const MODIFIER_FLAGS = { Control: "ctrlKey", Alt: "altKey", Shift: "shiftKey", Meta: "metaKey" };
 
   let mode = null;     // null | "drag" | "scroll"
-  let modeKey = "";    // code of the key holding the current mode
-  let armed = null;    // modifier key held, waiting for mouse movement: { mode, code, x, y }
+  let modeKey = "";    // code of the key or mouse button holding the current mode
+  let armed = null;    // modifier or mouse button held, waiting for mouse movement: { mode, code, x, y }
+  let swallowUntil = 0; // after scrolling with a mouse button: drop the click / context menu it ends with
   let mouseX = null;
   let mouseY = null;
   let anchor = null;   // scroll mode: where the key was pressed
@@ -93,6 +94,26 @@
     if (OWN_KEY_TAGS.has(el.tagName)) return true;
     const role = el.getAttribute?.("role");
     return role ? OWN_KEY_ROLES.has(role) : false;
+  }
+
+  // A mouse button on a link text or picture inside a button still belongs to the button
+  function pointerOnOwnElement(el) {
+    for (; el && el !== document.body; el = parentAcrossShadow(el)) {
+      if (keyBelongsToElement(el)) return true;
+    }
+    return false;
+  }
+
+  // Pressing on a scrollbar drags the scrollbar
+  function onScrollbar(event, el) {
+    const root = document.documentElement;
+    if (event.clientX >= root.clientWidth || event.clientY >= root.clientHeight) return true;
+    if (!(el instanceof Element) || !el.clientWidth || el === root) return false;
+    const rect = el.getBoundingClientRect();
+    const x = event.clientX - rect.left - el.clientLeft;
+    const y = event.clientY - rect.top - el.clientTop;
+    return (x >= el.clientWidth && el.offsetWidth - el.clientLeft * 2 > el.clientWidth)
+      || (y >= el.clientHeight && el.offsetHeight - el.clientTop * 2 > el.clientHeight);
   }
 
   // Ctrl+Space and the like belong to the browser or page – unless the key itself is the modifier.
@@ -271,6 +292,7 @@
       anchor = origin;
       startMotion();
     }
+    if (modeKey === "Mouse0") getSelection()?.removeAllRanges(); // the press may have started a text selection
     showOverlay();
   }
 
@@ -297,12 +319,13 @@
   // Any other user input stops coasting immediately
   const interrupt = () => !mode && frame && stopMotion();
   window.addEventListener("wheel", interrupt, { passive: true });
-  window.addEventListener("mousedown", interrupt);
+  window.addEventListener("mousedown", () => !armed && interrupt());
   window.addEventListener("touchstart", interrupt, { passive: true });
 
   window.addEventListener("keydown", (event) => {
     const heldCode = mode ? modeKey : armed?.code;
     if (heldCode) {
+      if (HoldToScrollKeys.isMouse(heldCode)) return; // keys don't interrupt a held mouse button
       if (event.code === heldCode) {
         if (mode && !HoldToScrollKeys.isModifier(event.key)) event.preventDefault(); // swallow key repeat
         return;
@@ -336,18 +359,62 @@
     deactivate();
   }, true);
 
-  window.addEventListener("mousedown", () => (armed = null), true); // Shift+click, Alt+click …
+  // Mouse buttons work like modifiers: pressing only arms, so a click without
+  // movement stays a click (follow a link, open the context menu, middle-click …).
+  window.addEventListener("mousedown", (event) => {
+    armed = null; // Shift+click, Alt+click …
+    swallowUntil = 0;
+    const code = HoldToScrollKeys.mouseCode(event.button);
+    const newMode = mode ? null : modeFor(code);
+    if (!newMode || !enabled() || otherModifierHeld(event)) return; // with a modifier the button acts as usual
+    const target = event.composedPath()[0];
+    if (pointerOnOwnElement(target) || onScrollbar(event, target)) return;
+    if (event.button === 1) event.preventDefault(); // Firefox's own autoscroll
+    armed = { mode: newMode, code, x: event.clientX, y: event.clientY };
+  }, true);
+
+  window.addEventListener("mouseup", (event) => {
+    const code = HoldToScrollKeys.mouseCode(event.button);
+    if (armed?.code === code) armed = null;
+    if (!mode || modeKey !== code) return;
+    swallowUntil = performance.now() + 500;
+    deactivate();
+  }, true);
+
+  function swallow(event) {
+    if (event.type === "contextmenu" && armed?.code === "Mouse2") {
+      event.preventDefault(); // Linux opens the menu on press – that would end the scroll before it starts
+      return;
+    }
+    if (performance.now() > swallowUntil) return;
+    swallowUntil = 0;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+  window.addEventListener("click", swallow, true);
+  window.addEventListener("auxclick", swallow, true);
+  window.addEventListener("contextmenu", swallow, true);
+  // Held mouse button: no text or link dragging
+  window.addEventListener("dragstart", (event) => HoldToScrollKeys.isMouse(armed?.code ?? modeKey) && event.preventDefault(), true);
+  window.addEventListener("selectstart", (event) => modeKey === "Mouse0" && event.preventDefault(), true);
   window.addEventListener("blur", () => {
     armed = null;
     deactivate(true);
   });
   document.addEventListener("visibilitychange", () => document.hidden && deactivate(true));
 
-  const ARM_DISTANCE = 4; // px of movement before an armed modifier takes over
+  const ARM_DISTANCE = 4; // px of movement before an armed modifier or mouse button takes over
+  const BUTTON_BITS = { Mouse0: 1, Mouse1: 4, Mouse2: 2 }; // MouseEvent.buttons
 
   window.addEventListener("mousemove", (event) => {
     mouseX = event.clientX;
     mouseY = event.clientY;
+    if (mode && HoldToScrollKeys.isMouse(modeKey) && !(event.buttons & BUTTON_BITS[modeKey])) {
+      // Released outside the window – no mouseup arrived. (Only checked while active:
+      // Firefox reports no buttons on the first move after pressing on a link.)
+      deactivate();
+      return;
+    }
     if (armed && Math.hypot(mouseX - armed.x, mouseY - armed.y) >= ARM_DISTANCE) {
       const { mode: armedMode, code, x, y } = armed;
       armed = null;
@@ -370,5 +437,7 @@
       dragVY += (dy / dt - dragVY) * blend;
       lastMove = now;
     }
+    // With a mouse button held the page would otherwise see a drag of its own (select, move a map …)
+    if (mode && HoldToScrollKeys.isMouse(modeKey)) event.stopPropagation();
   }, { capture: true, passive: true });
 })();

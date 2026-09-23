@@ -35,7 +35,7 @@ Scrollen ohne Klick, ohne Mausrad und ohne die Scrollleiste zu suchen: Taste hal
 </ul>
 
 <b>Deine Tasten</b>
-Jede Taste ist möglich – Umschalt, Alt, Strg, Leertaste oder ein Buchstabe. Alles lässt sich im Popup der Symbolleiste einstellen, mit Live-Vorschau.
+Jede Taste ist möglich – Umschalt, Alt, Strg, Leertaste oder ein Buchstabe – und auch die linke, mittlere oder rechte Maustaste. Alles lässt sich im Popup der Symbolleiste einstellen, mit Live-Vorschau.
 
 Auf Deutsch und Englisch. Es werden keine Daten erhoben und nichts versendet.
 

@@ -35,7 +35,7 @@ Scroll without clicking, without the wheel, without hunting for the scrollbar: h
 </ul>
 
 <b>Your keys</b>
-Any key can be used – Shift, Alt, Ctrl, Space or a letter. Everything is configurable in the toolbar popup, with a live preview.
+Any key can be used – Shift, Alt, Ctrl, Space or a letter – as well as the left, middle or right mouse button. Everything is configurable in the toolbar popup, with a live preview.
 
 Available in English and German. No data is collected, nothing is sent anywhere.
 

@@ -37,7 +37,7 @@
       display: inline-block; min-width: 7em; padding: 0.2em 0.5em; text-align: center;
       border: 1px solid var(--line); border-radius: 4px; font: inherit; font-weight: 600;
     }
-    kbd.recording { border-color: var(--accent); color: var(--accent); }
+    kbd.recording { border-color: var(--accent); color: var(--accent); cursor: pointer; }
     input[type="number"] { width: 4.5em; }
     input[type="text"] { width: 12em; }
     input[type="range"] { vertical-align: middle; width: 9em; }
@@ -92,7 +92,7 @@
 
   <details open id="keysSection">
     <summary data-i18n="sectionKeys">Keys</summary>
-    <p class="hint" data-i18n="keysHint">Hold the key and move the mouse – no click needed. In text fields, buttons and videos the key keeps its normal function.</p>
+    <p class="hint" data-i18n="keysHint">Hold the key – or mouse button – and move the mouse. In text fields, buttons and videos it keeps its normal function.</p>
     <div class="row">
       <span data-i18n="dragMode">Drag mode</span>
       <kbd id="dragKeyLabel"></kbd>

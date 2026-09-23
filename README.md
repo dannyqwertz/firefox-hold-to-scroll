@@ -27,6 +27,12 @@ https://github.com/user-attachments/assets/86aa1f08-b488-4415-bb5f-e63ac36767ff
   only starts once the mouse moves. Shortcuts (Shift+A, Alt+←), Shift+click
   and tapping Alt for the menu bar keep working. Shift, Ctrl and Super work on
   either side; Alt is left-only, since the right Alt is AltGr on many layouts.
+- **Mouse buttons** instead of keys: left, middle or right button (set by
+  clicking the key field with that button). They work like modifiers: a click
+  without moving stays a normal click; with Ctrl/Shift/Alt/Super held the
+  button acts as usual (e.g. Ctrl+drag selects text with the left button).
+  On Linux and macOS Firefox opens the context menu on press, so with the
+  right button use Shift+right-click for the menu.
 - **Momentum & coasting** (optional, adjustable coast time): scrolling eases
   in and coasts to a stop after releasing the key; in drag mode the page keeps
   rolling if the mouse was still moving on release. Mouse wheel, click or any

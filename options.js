@@ -31,27 +31,39 @@ function stopRecording(message = "") {
   if (!recording) return;
   $(`${recording}Label`).classList.remove("recording");
   window.removeEventListener("keydown", onRecordKey, true);
+  window.removeEventListener("mousedown", onRecordMouse, true);
   recording = null;
   renderKeys();
   $("keyMessage").textContent = message;
+}
+
+function record(code, name) {
+  const other = recording === "dragKey" ? "scrollKey" : "dragKey";
+  if (settings[other] && HoldToScrollKeys.normalize(code) === HoldToScrollKeys.normalize(settings[other])) {
+    $("keyMessage").textContent = t("keyUsed", keyLabel(code, name));
+    return;
+  }
+  const key = recording;
+  settings[key] = code;
+  settings[`${key}Name`] = name;
+  save({ [key]: code, [`${key}Name`]: name });
+  const hints = { AltLeft: "hintAlt", Tab: "hintTab", Mouse0: "hintMouse0", Mouse1: "hintMouse1", Mouse2: "hintMouse2" };
+  stopRecording(hints[code] ? t(hints[code]) : "");
 }
 
 function onRecordKey(event) {
   event.preventDefault();
   event.stopPropagation();
   if (event.code === "Escape") return stopRecording();
+  record(event.code, event.key);
+}
 
-  const other = recording === "dragKey" ? "scrollKey" : "dragKey";
-  if (settings[other] && HoldToScrollKeys.normalize(event.code) === HoldToScrollKeys.normalize(settings[other])) {
-    $("keyMessage").textContent = t("keyUsed", keyLabel(event.code, event.key));
-    return;
-  }
-  const key = recording;
-  settings[key] = event.code;
-  settings[`${key}Name`] = event.key;
-  save({ [key]: event.code, [`${key}Name`]: event.key });
-  const hints = { AltLeft: "hintAlt", Tab: "hintTab" };
-  stopRecording(hints[event.code] ? t(hints[event.code]) : "");
+// A mouse button is recorded by clicking the key field with it; a click anywhere else cancels.
+function onRecordMouse(event) {
+  const code = HoldToScrollKeys.mouseCode(event.button);
+  if (event.target !== $(`${recording}Label`) || !code) return stopRecording();
+  event.preventDefault();
+  record(code, "");
 }
 
 document.querySelectorAll("[data-record]").forEach((button) => {
@@ -61,11 +73,15 @@ document.querySelectorAll("[data-record]").forEach((button) => {
     const label = $(`${recording}Label`);
     label.textContent = t("pressKey");
     label.classList.add("recording");
-    $("keyMessage").textContent = t("escCancels");
+    $("keyMessage").textContent = t("recordHint");
     window.addEventListener("keydown", onRecordKey, true);
+    window.addEventListener("mousedown", onRecordMouse, true);
     button.blur(); // otherwise Space would trigger the button again
   });
 });
+
+// Right-clicking the key field records the button, it shouldn't also open a menu
+document.querySelectorAll("kbd").forEach((kbd) => kbd.addEventListener("contextmenu", (event) => event.preventDefault()));
 
 document.querySelectorAll("[data-clear]").forEach((button) => {
   button.addEventListener("click", () => {

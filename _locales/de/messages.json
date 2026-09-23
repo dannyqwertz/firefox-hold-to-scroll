@@ -27,7 +27,7 @@
     "message": "Tasten"
   },
   "keysHint": {
-    "message": "Taste gedrückt halten und die Maus bewegen – kein Klick nötig. In Eingabefeldern, bei Buttons und Videos behält die Taste ihre normale Funktion."
+    "message": "Taste – oder Maustaste – gedrückt halten und die Maus bewegen. In Eingabefeldern, bei Buttons und Videos behält sie ihre normale Funktion."
   },
   "dragMode": {
     "message": "Dragmodus"
@@ -44,8 +44,8 @@
   "pressKey": {
     "message": "Taste drücken …"
   },
-  "escCancels": {
-    "message": "Esc bricht ab."
+  "recordHint": {
+    "message": "Taste drücken – oder mit der gewünschten Maustaste auf dieses Feld klicken. Esc bricht ab."
   },
   "keyUsed": {
     "message": "$VALUE$ ist schon für den anderen Modus belegt.",
@@ -60,6 +60,15 @@
   },
   "hintTab": {
     "message": "Hinweis: Außerhalb des Add-ons springt Tab weiter zwischen Links und Feldern."
+  },
+  "hintMouse0": {
+    "message": "Ein Klick ohne Bewegung bleibt ein Klick. Text markierst du, indem du beim Ziehen Strg gedrückt hältst."
+  },
+  "hintMouse1": {
+    "message": "Mittelklick ohne Bewegung öffnet Links weiterhin in einem neuen Tab. Das eigene Autoscrollen von Firefox ist für diese Taste aus."
+  },
+  "hintMouse2": {
+    "message": "Unter Windows öffnet ein Rechtsklick ohne Bewegung weiterhin das Kontextmenü. Unter Linux und macOS öffnet Firefox es schon beim Drücken – dort Umschalt+Rechtsklick nehmen (oder in about:config ui.context_menus.after_mouseup auf true setzen)."
   },
   "keyNotSet": {
     "message": "Nicht belegt"
@@ -84,6 +93,15 @@
   },
   "keyArrowRight": {
     "message": "Pfeil rechts"
+  },
+  "keyMouse0": {
+    "message": "Linke Maustaste"
+  },
+  "keyMouse1": {
+    "message": "Mittlere Maustaste"
+  },
+  "keyMouse2": {
+    "message": "Rechte Maustaste"
   },
   "keyNumpad": {
     "message": "Ziffernblock $VALUE$",
