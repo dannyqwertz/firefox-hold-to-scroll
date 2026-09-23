@@ -1,0 +1,62 @@
+# Builds the add-on for every version tag (v1.2.3) and publishes a GitHub release with the .xpi.
+# With the repository secrets AMO_JWT_ISSUER and AMO_JWT_SECRET set, the .xpi is signed by
+# Mozilla (unlisted channel – not published on addons.mozilla.org) and installs in any Firefox.
+# Without them, the release gets an unsigned .xpi for temporary loading only.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check that the tag matches the manifest version
+        run: |
+          version=$(node -p "require('./manifest.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match manifest version $version"
+            exit 1
+          fi
+
+      - name: Lint
+        run: npx --yes web-ext@8 lint
+
+      - name: Sign (unlisted) or build unsigned
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          if [ -n "$AMO_JWT_ISSUER" ] && [ -n "$AMO_JWT_SECRET" ]; then
+            npx --yes web-ext@8 sign --channel=unlisted \
+              --api-key="$AMO_JWT_ISSUER" --api-secret="$AMO_JWT_SECRET"
+            install="Click the .xpi below in Firefox to install it. It is signed by Mozilla."
+          else
+            npx --yes web-ext@8 build
+            for f in web-ext-artifacts/*.zip; do mv "$f" "${f%.zip}.xpi"; done
+            install="This .xpi is **not signed**: load it via about:debugging → This Firefox → Load Temporary Add-on… (removed on restart)."
+          fi
+          ls -l web-ext-artifacts
+          {
+            echo "## Install"
+            echo
+            echo "$install"
+            echo
+            echo "After installing, a welcome page shows the keys: hold **Shift** and move the mouse to drag the page, hold **Alt** to scroll."
+          } > release-notes.md
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: web-ext-artifacts/*.xpi
+          body_path: release-notes.md

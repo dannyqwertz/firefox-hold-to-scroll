@@ -55,6 +55,14 @@ https://addons.mozilla.org/developers/addon/api/key/ and run:
 
     npx web-ext sign --channel=unlisted --api-key=… --api-secret=…
 
+## Release
+
+Push a tag matching the manifest version, e.g. `git tag v1.0.1 && git push github v1.0.1`.
+The GitHub workflow (`.github/workflows/release.yml`) lints and builds the add-on and
+creates a GitHub release with the `.xpi`. If the repository secrets `AMO_JWT_ISSUER` and
+`AMO_JWT_SECRET` are set, the file is signed by Mozilla on the unlisted channel (not
+published on addons.mozilla.org) and installs in any Firefox.
+
 ## Files
 
 | File | Purpose |
