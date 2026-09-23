@@ -1,0 +1,236 @@
+{
+  "extName": {
+    "message": "Hold to Scroll"
+  },
+  "extDescription": {
+    "message": "Taste halten und die Maus bewegen: die Seite ziehen oder stufenlos von einem Ankerpunkt aus scrollen – ganz ohne Mausklick."
+  },
+  "badgeOff": {
+    "message": "aus"
+  },
+  "siteSwitchTitle": {
+    "message": "Auf dieser Seite ein- oder ausschalten"
+  },
+  "siteUnavailable": {
+    "message": "Auf dieser Seite nicht verfügbar"
+  },
+  "siteUnavailableHint": {
+    "message": "Firefox-interne Seite – oder Seite neu laden."
+  },
+  "siteActive": {
+    "message": "Aktiv auf dieser Seite"
+  },
+  "siteDisabled": {
+    "message": "Auf dieser Seite ausgeschaltet"
+  },
+  "sectionKeys": {
+    "message": "Tasten"
+  },
+  "keysHint": {
+    "message": "Taste gedrückt halten und die Maus bewegen – kein Klick nötig. In Eingabefeldern, bei Buttons und Videos behält die Taste ihre normale Funktion."
+  },
+  "dragMode": {
+    "message": "Dragmodus"
+  },
+  "scrollMode": {
+    "message": "Scrollmodus"
+  },
+  "change": {
+    "message": "Ändern"
+  },
+  "remove": {
+    "message": "Entfernen"
+  },
+  "pressKey": {
+    "message": "Taste drücken …"
+  },
+  "escCancels": {
+    "message": "Esc bricht ab."
+  },
+  "keyUsed": {
+    "message": "$VALUE$ ist schon für den anderen Modus belegt.",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "hintAlt": {
+    "message": "Tipp: Alt ohne Mausbewegung antippen blendet weiterhin wie gewohnt die Menüleiste ein."
+  },
+  "hintTab": {
+    "message": "Hinweis: Außerhalb des Add-ons springt Tab weiter zwischen Links und Feldern."
+  },
+  "keyNotSet": {
+    "message": "Nicht belegt"
+  },
+  "keySpace": {
+    "message": "Leertaste"
+  },
+  "keyAltLeft": {
+    "message": "Alt"
+  },
+  "keyAltRight": {
+    "message": "Alt Gr"
+  },
+  "keyArrowUp": {
+    "message": "Pfeil hoch"
+  },
+  "keyArrowDown": {
+    "message": "Pfeil runter"
+  },
+  "keyArrowLeft": {
+    "message": "Pfeil links"
+  },
+  "keyArrowRight": {
+    "message": "Pfeil rechts"
+  },
+  "keyNumpad": {
+    "message": "Ziffernblock $VALUE$",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "sectionGeneral": {
+    "message": "Allgemein"
+  },
+  "momentum": {
+    "message": "Schwung & Bremsweg"
+  },
+  "coastTime": {
+    "message": "Auslaufzeit"
+  },
+  "momentumHint": {
+    "message": "Scrollen fährt weich an und läuft nach dem Loslassen aus; im Dragmodus rollt die Seite mit Schwung weiter. Mausrad, Klick oder eine Taste stoppen sofort."
+  },
+  "colorHint": {
+    "message": "Farbe von Anzeige und Rahmen:"
+  },
+  "styleInvert": {
+    "message": "Invertiert – auf jedem Hintergrund sichtbar"
+  },
+  "styleDark": {
+    "message": "Dunkel"
+  },
+  "styleLight": {
+    "message": "Hell"
+  },
+  "dragHint": {
+    "message": "Die Seite folgt der Maus, als würdest du sie greifen."
+  },
+  "dragInvert": {
+    "message": "Richtung umkehren"
+  },
+  "dragSpeed": {
+    "message": "Geschwindigkeit"
+  },
+  "dragFrame": {
+    "message": "Rahmen anzeigen, solange die Taste gedrückt ist"
+  },
+  "scrollHint": {
+    "message": "Wo du die Taste drückst, entsteht ein Ankerpunkt. Die Seite scrollt in Richtung der Maus – auch wenn sie stillsteht."
+  },
+  "progressive": {
+    "message": "Stufenlos"
+  },
+  "progressiveHint": {
+    "message": "– je weiter weg die Maus, desto schneller"
+  },
+  "steps": {
+    "message": "Stufen"
+  },
+  "stepsHint": {
+    "message": "– feste Geschwindigkeit je Zone"
+  },
+  "showIndicator": {
+    "message": "Anker und Tempo anzeigen"
+  },
+  "deadZone": {
+    "message": "Tote Zone"
+  },
+  "baseSpeed": {
+    "message": "Grundtempo"
+  },
+  "baseSpeedHint": {
+    "message": "Tempo bei 100 px Abstand."
+  },
+  "acceleration": {
+    "message": "Beschleunigung"
+  },
+  "accelerationHint": {
+    "message": "1 = gleichmäßig; höher = nah am Anker feiner, weiter weg deutlich schneller."
+  },
+  "topSpeed": {
+    "message": "Höchsttempo"
+  },
+  "curveSummary": {
+    "message": "Abstand außerhalb der toten Zone: $VALUE$",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "gaugeHint": {
+    "message": "Der Kreis um den Anker wächst mit dem Tempo, der gepunktete Ring markiert das Höchsttempo."
+  },
+  "zoneWidth": {
+    "message": "Breite je Zone"
+  },
+  "speeds": {
+    "message": "Geschwindigkeiten"
+  },
+  "speedsHint": {
+    "message": "Von innen nach außen, durch Kommas getrennt. Die aktive Zone wird hervorgehoben."
+  },
+  "zoneError": {
+    "message": "Bitte 1 bis 8 positive Zahlen eingeben, getrennt durch Kommas."
+  },
+  "previewHint": {
+    "message": "Vorschau auf hellem und dunklem Grund – Maus über die Fläche bewegen:"
+  },
+  "sectionDisabled": {
+    "message": "Ausgeschaltete Seiten"
+  },
+  "enableAgain": {
+    "message": "Wieder einschalten"
+  },
+  "keyShift": {
+    "message": "Umschalt"
+  },
+  "keyControl": {
+    "message": "Strg"
+  },
+  "keyMeta": {
+    "message": "Super"
+  },
+  "welcomeTitle": {
+    "message": "Hold to Scroll ist bereit"
+  },
+  "welcomeMove": {
+    "message": "+ Maus bewegen"
+  },
+  "welcomeDrag": {
+    "message": "Seite ziehen"
+  },
+  "welcomeScroll": {
+    "message": "scrollen – je weiter, desto schneller"
+  },
+  "welcomeTry": {
+    "message": "Kein Klick nötig. Probier es gleich hier auf der Seite aus."
+  },
+  "welcomeToolbar": {
+    "message": "Alle Einstellungen findest du hinter dem Button in der Symbolleiste – dort kannst du auch die Tasten ändern oder das Add-on für einzelne Seiten ausschalten."
+  },
+  "welcomeSettings": {
+    "message": "Einstellungen öffnen"
+  },
+  "welcomeTip": {
+    "message": "Tastenkürzel wie Umschalt+A oder Alt+← und Umschalt-Klick funktionieren wie gewohnt: Der Modus startet erst, wenn sich die Maus bewegt."
+  },
+  "close": {
+    "message": "Schließen"
+  }
+}

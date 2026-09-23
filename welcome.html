@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hold to Scroll</title>
+  <link rel="icon" href="icons/icon.svg">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f9f9fb;
+      --card: #ffffff;
+      --text: #15141a;
+      --muted: #5b5b66;
+      --line: #d7d7db;
+      --tile: #eceff3;
+      --accent: #0a84ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1c1b22; --card: #2b2a33; --text: #fbfbfe; --muted: #b1b1b9; --line: #52525e; --tile: #33323b; }
+    }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, sans-serif; }
+
+    /* Welcome card, fixed like a tooltip so it stays readable while trying it out */
+    .card {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 1;
+      width: min(460px, calc(100vw - 32px)); box-sizing: border-box;
+      padding: 18px 20px; border-radius: 12px; background: var(--card);
+      border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    }
+    .card h1 { display: flex; align-items: center; gap: 10px; font-size: 18px; margin: 0 0 12px; }
+    .card h1 img { width: 28px; height: 28px; }
+    .keys { display: grid; grid-template-columns: auto auto 1fr; gap: 8px 10px; align-items: center; margin: 0 0 12px; }
+    kbd {
+      justify-self: start; min-width: 3.5em; padding: 3px 10px; text-align: center;
+      font: 600 14px system-ui, sans-serif; border: 1px solid var(--line); border-bottom-width: 3px;
+      border-radius: 6px; background: var(--bg);
+    }
+    .move { color: var(--muted); white-space: nowrap; }
+    .action { font-weight: 600; }
+    .card p { margin: 6px 0; color: var(--muted); font-size: 14px; }
+    .card p.try { color: var(--text); font-weight: 600; }
+    .card button { margin-top: 8px; font: inherit; padding: 5px 12px; }
+    .card .close {
+      position: absolute; top: 10px; right: 10px; margin: 0; padding: 2px 8px;
+      border: 0; background: none; color: var(--muted); font-size: 16px; cursor: pointer;
+    }
+    .card.hidden { opacity: 0; pointer-events: none; transition: opacity 150ms; }
+
+    /* Try-it area: tall, and wider than the window, so both directions can be scrolled */
+    .playground {
+      padding: 440px 32px 120px; display: grid; gap: 16px;
+      grid-template-columns: repeat(12, 180px); width: max-content;
+    }
+    .tile {
+      height: 120px; border-radius: 10px; background: var(--tile);
+      display: grid; place-items: center; font: 600 22px system-ui, sans-serif; color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <button class="close" id="close" data-i18n-title="close" title="Close">✕</button>
+    <h1><img src="icons/icon.svg" alt=""> <span data-i18n="welcomeTitle">Hold to Scroll is ready</span></h1>
+    <div class="keys">
+      <kbd id="dragKey"></kbd><span class="move" data-i18n="welcomeMove">+ move the mouse</span><span class="action" data-i18n="welcomeDrag">drag the page</span>
+      <kbd id="scrollKey"></kbd><span class="move" data-i18n="welcomeMove">+ move the mouse</span><span class="action" data-i18n="welcomeScroll">scroll – the farther, the faster</span>
+    </div>
+    <p class="try" data-i18n="welcomeTry">No click needed. Try it right here on this page.</p>
+    <p data-i18n="welcomeTip">Shortcuts like Shift+A or Alt+← and Shift+click work as before: the mode only starts once the mouse moves.</p>
+    <p data-i18n="welcomeToolbar">All settings are behind the toolbar button.</p>
+    <button id="openSettings" data-i18n="welcomeSettings">Open settings</button>
+  </div>
+
+  <div class="playground" id="playground"></div>
+
+  <script src="defaults.js"></script>
+  <script src="keys.js"></script>
+  <script src="scroll.js"></script>
+  <script src="content.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

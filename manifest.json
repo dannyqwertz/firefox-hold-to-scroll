@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "1.0.0",
+  "description": "__MSG_extDescription__",
+  "author": "Daniel Michelberger",
+  "homepage_url": "https://github.com/dannyqwertz/firefox-hold-to-scroll",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hold-to-scroll@dne.name",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "defaults.js",
+        "keys.js",
+        "scroll.js",
+        "content.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_popup": "options.html?popup",
+    "default_icon": {
+      "16": "icons/toolbar-dark.svg",
+      "32": "icons/toolbar-dark.svg"
+    },
+    "theme_icons": [
+      {
+        "dark": "icons/toolbar-dark.svg",
+        "light": "icons/toolbar-light.svg",
+        "size": 16
+      },
+      {
+        "dark": "icons/toolbar-dark.svg",
+        "light": "icons/toolbar-light.svg",
+        "size": 32
+      }
+    ]
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "default_locale": "en"
+}

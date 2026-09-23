@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --text: #15141a;
+      --muted: #5b5b66;
+      --line: #d7d7db;
+      --surface: #f9f9fb;
+      --accent: #0a84ff;
+      --error: #c50042;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #fbfbfe; --muted: #b1b1b9; --line: #52525e;
+        --surface: #2b2a33; --error: #ff848b;
+      }
+    }
+    [hidden] { display: none !important; }
+    body { font: 13px system-ui, sans-serif; color: var(--text); margin: 1em; max-width: 44em; }
+    body.popup { width: 340px; margin: 0; padding: 12px; }
+
+    p.hint { color: var(--muted); margin: 0.3em 0 0.6em; }
+    label { display: block; margin: 0.6em 0; }
+    .row { display: flex; align-items: center; gap: 0.4em; margin: 0.6em 0; flex-wrap: wrap; }
+    .row > span:first-child { min-width: 8.5em; }
+    .error { color: var(--error); }
+
+    details { border-top: 1px solid var(--line); padding: 0.2em 0; }
+    summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 0.5em 0; }
+    body:not(.popup) summary { pointer-events: none; list-style: none; }
+    body:not(.popup) summary::-webkit-details-marker { display: none; }
+
+    kbd {
+      display: inline-block; min-width: 7em; padding: 0.2em 0.5em; text-align: center;
+      border: 1px solid var(--line); border-radius: 4px; font: inherit; font-weight: 600;
+    }
+    kbd.recording { border-color: var(--accent); color: var(--accent); }
+    input[type="number"] { width: 4.5em; }
+    input[type="text"] { width: 12em; }
+    input[type="range"] { vertical-align: middle; width: 9em; }
+
+    /* Site switch (popup only) */
+    .site {
+      display: flex; align-items: center; gap: 0.7em;
+      padding: 10px 12px; margin-bottom: 8px; border-radius: 8px; background: var(--surface);
+    }
+    .site-text { flex: 1; min-width: 0; }
+    .site-host { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-state { color: var(--muted); }
+    .switch { position: relative; width: 36px; height: 20px; margin: 0; flex: none; }
+    .switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+    .switch span {
+      position: absolute; inset: 0; border-radius: 10px; background: var(--line);
+      transition: background 120ms; pointer-events: none;
+    }
+    .switch span::after {
+      content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+      border-radius: 50%; background: #fff; transition: transform 120ms;
+    }
+    .switch input:checked + span { background: var(--accent); }
+    .switch input:checked + span::after { transform: translateX(16px); }
+    .switch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .preview {
+      position: relative; height: 260px; margin-top: 0.5em; overflow: hidden;
+      border: 1px solid var(--line); border-radius: 6px;
+      background: linear-gradient(90deg, #f4f4f5 50%, #2b2a33 50%);
+      cursor: all-scroll;
+    }
+    body.popup .preview { height: 200px; }
+
+    .factor { display: grid; grid-template-columns: 8.5em 1fr 5.5em; align-items: center; gap: 0.5em; margin: 0.5em 0 0.1em; }
+    .factor input { width: 100%; margin: 0; }
+    .factor output { text-align: right; font-variant-numeric: tabular-nums; }
+    #disabledList { list-style: none; padding: 0; margin: 0.4em 0; }
+    #disabledList li { display: flex; justify-content: space-between; align-items: center; padding: 0.25em 0; }
+  </style>
+</head>
+<body>
+  <div class="site" id="site" hidden>
+    <div class="site-text">
+      <div class="site-host" id="siteHost"></div>
+      <div class="site-state" id="siteState"></div>
+    </div>
+    <label class="switch" data-i18n-title="siteSwitchTitle" title="Enable or disable on this site">
+      <input type="checkbox" id="siteEnabled"><span></span>
+    </label>
+  </div>
+
+  <details open id="keysSection">
+    <summary data-i18n="sectionKeys">Keys</summary>
+    <p class="hint" data-i18n="keysHint">Hold the key and move the mouse – no click needed. In text fields, buttons and videos the key keeps its normal function.</p>
+    <div class="row">
+      <span data-i18n="dragMode">Drag mode</span>
+      <kbd id="dragKeyLabel"></kbd>
+      <button data-record="dragKey" data-i18n="change">Change</button>
+      <button data-clear="dragKey" data-i18n-title="remove" title="Remove">✕</button>
+    </div>
+    <div class="row">
+      <span data-i18n="scrollMode">Scroll mode</span>
+      <kbd id="scrollKeyLabel"></kbd>
+      <button data-record="scrollKey" data-i18n="change">Change</button>
+      <button data-clear="scrollKey" data-i18n-title="remove" title="Remove">✕</button>
+    </div>
+    <p class="hint" id="keyMessage"></p>
+  </details>
+
+  <details open>
+    <summary data-i18n="sectionGeneral">General</summary>
+    <label><input type="checkbox" id="momentum"> <span data-i18n="momentum">Momentum &amp; coasting</span></label>
+    <div class="factor" id="brakeRow">
+      <span data-i18n="coastTime">Coast time</span>
+      <input type="range" id="brakeTime" min="50" max="1000" step="25">
+      <output data-for="brakeTime" data-unit="ms"></output>
+    </div>
+    <p class="hint" data-i18n="momentumHint">Scrolling eases in and coasts to a stop after releasing the key; in drag mode the page keeps rolling with momentum. Mouse wheel, click or any key stops it immediately.</p>
+    <p class="hint" data-i18n="colorHint">Color of indicator and frame:</p>
+    <label><input type="radio" name="overlayStyle" value="invert"> <span data-i18n="styleInvert">Inverted – visible on any background</span></label>
+    <label><input type="radio" name="overlayStyle" value="dark"> <span data-i18n="styleDark">Dark</span></label>
+    <label><input type="radio" name="overlayStyle" value="light"> <span data-i18n="styleLight">Light</span></label>
+  </details>
+
+  <details open>
+    <summary data-i18n="dragMode">Drag mode</summary>
+    <p class="hint" data-i18n="dragHint">The page follows the mouse, as if you were grabbing it.</p>
+    <label><input type="checkbox" id="invert"> <span data-i18n="dragInvert">Reverse direction</span></label>
+    <label><span data-i18n="dragSpeed">Speed</span>
+      <input type="range" id="speed" min="0.25" max="5" step="0.25">
+      <output id="speedValue"></output>×
+    </label>
+    <label><input type="checkbox" id="showFrame"> <span data-i18n="dragFrame">Show a frame while the key is held</span></label>
+  </details>
+
+  <details open>
+    <summary data-i18n="scrollMode">Scroll mode</summary>
+    <p class="hint" data-i18n="scrollHint">Pressing the key sets an anchor point. The page scrolls towards the mouse – even while the mouse stands still.</p>
+    <label><input type="radio" name="scrollMode" value="progressive"> <b data-i18n="progressive">Progressive</b> <span data-i18n="progressiveHint">– the farther the mouse, the faster</span></label>
+    <label><input type="radio" name="scrollMode" value="steps"> <b data-i18n="steps">Steps</b> <span data-i18n="stepsHint">– fixed speed per zone</span></label>
+    <label><input type="checkbox" id="showIndicator"> <span data-i18n="showIndicator">Show anchor and speed</span></label>
+    <div class="factor">
+      <span data-i18n="deadZone">Dead zone</span>
+      <input type="range" id="deadZone" min="0" max="100" step="1">
+      <output data-for="deadZone" data-unit="px"></output>
+    </div>
+    <div id="progressiveSettings">
+      <div class="factor">
+        <span data-i18n="baseSpeed">Base speed</span>
+        <input type="range" id="scrollSpeed" min="50" max="2000" step="25">
+        <output data-for="scrollSpeed" data-unit="px/s"></output>
+      </div>
+      <p class="hint" data-i18n="baseSpeedHint">Speed at 100 px distance.</p>
+      <div class="factor">
+        <span data-i18n="acceleration">Acceleration</span>
+        <input type="range" id="scrollCurve" min="1" max="3" step="0.1">
+        <output data-for="scrollCurve" data-unit=""></output>
+      </div>
+      <p class="hint" data-i18n="accelerationHint">1 = linear; higher = finer near the anchor, much faster farther out.</p>
+      <div class="factor">
+        <span data-i18n="topSpeed">Top speed</span>
+        <input type="range" id="scrollMax" min="500" max="20000" step="500">
+        <output data-for="scrollMax" data-unit="px/s"></output>
+      </div>
+      <p class="hint" id="curveSummary"></p>
+      <p class="hint" data-i18n="gaugeHint">The circle around the anchor grows with the speed; the dotted ring marks top speed.</p>
+    </div>
+    <div id="stepSettings">
+      <div class="factor">
+        <span data-i18n="zoneWidth">Zone width</span>
+        <input type="range" id="ringWidth" min="20" max="200" step="5">
+        <output data-for="ringWidth" data-unit="px"></output>
+      </div>
+      <div class="row">
+        <span data-i18n="speeds">Speeds</span>
+        <input type="text" id="zoneSpeeds" spellcheck="false"> px/s
+      </div>
+      <p class="hint" data-i18n="speedsHint">Inside out, separated by commas. The active zone is highlighted.</p>
+      <p class="hint error" id="zoneError" hidden></p>
+    </div>
+    <p class="hint" data-i18n="previewHint">Preview on light and dark backgrounds – move the mouse over it:</p>
+    <div class="preview" id="preview"></div>
+  </details>
+
+  <details open id="disabledSection" hidden>
+    <summary data-i18n="sectionDisabled">Disabled sites</summary>
+    <ul id="disabledList"></ul>
+  </details>
+
+  <script src="defaults.js"></script>
+  <script src="keys.js"></script>
+  <script src="scroll.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

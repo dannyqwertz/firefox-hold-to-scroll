@@ -1,0 +1,236 @@
+{
+  "extName": {
+    "message": "Hold to Scroll"
+  },
+  "extDescription": {
+    "message": "Hold a key and move the mouse to scroll – drag the page, or scroll progressively from an anchor point. No mouse click needed."
+  },
+  "badgeOff": {
+    "message": "off"
+  },
+  "siteSwitchTitle": {
+    "message": "Enable or disable on this site"
+  },
+  "siteUnavailable": {
+    "message": "Not available on this page"
+  },
+  "siteUnavailableHint": {
+    "message": "Firefox-internal page – or reload the page."
+  },
+  "siteActive": {
+    "message": "Active on this site"
+  },
+  "siteDisabled": {
+    "message": "Disabled on this site"
+  },
+  "sectionKeys": {
+    "message": "Keys"
+  },
+  "keysHint": {
+    "message": "Hold the key and move the mouse – no click needed. In text fields, buttons and videos the key keeps its normal function."
+  },
+  "dragMode": {
+    "message": "Drag mode"
+  },
+  "scrollMode": {
+    "message": "Scroll mode"
+  },
+  "change": {
+    "message": "Change"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "pressKey": {
+    "message": "Press a key …"
+  },
+  "escCancels": {
+    "message": "Esc cancels."
+  },
+  "keyUsed": {
+    "message": "$VALUE$ is already used for the other mode.",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "hintAlt": {
+    "message": "Tip: tapping Alt without moving the mouse still shows Firefox's menu bar as usual."
+  },
+  "hintTab": {
+    "message": "Note: outside the add-on, Tab still moves between links and fields."
+  },
+  "keyNotSet": {
+    "message": "Not set"
+  },
+  "keySpace": {
+    "message": "Space"
+  },
+  "keyAltLeft": {
+    "message": "Alt"
+  },
+  "keyAltRight": {
+    "message": "AltGr"
+  },
+  "keyArrowUp": {
+    "message": "Arrow Up"
+  },
+  "keyArrowDown": {
+    "message": "Arrow Down"
+  },
+  "keyArrowLeft": {
+    "message": "Arrow Left"
+  },
+  "keyArrowRight": {
+    "message": "Arrow Right"
+  },
+  "keyNumpad": {
+    "message": "Numpad $VALUE$",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "sectionGeneral": {
+    "message": "General"
+  },
+  "momentum": {
+    "message": "Momentum & coasting"
+  },
+  "coastTime": {
+    "message": "Coast time"
+  },
+  "momentumHint": {
+    "message": "Scrolling eases in and coasts to a stop after releasing the key; in drag mode the page keeps rolling with momentum. Mouse wheel, click or any key stops it immediately."
+  },
+  "colorHint": {
+    "message": "Color of indicator and frame:"
+  },
+  "styleInvert": {
+    "message": "Inverted – visible on any background"
+  },
+  "styleDark": {
+    "message": "Dark"
+  },
+  "styleLight": {
+    "message": "Light"
+  },
+  "dragHint": {
+    "message": "The page follows the mouse, as if you were grabbing it."
+  },
+  "dragInvert": {
+    "message": "Reverse direction"
+  },
+  "dragSpeed": {
+    "message": "Speed"
+  },
+  "dragFrame": {
+    "message": "Show a frame while the key is held"
+  },
+  "scrollHint": {
+    "message": "Pressing the key sets an anchor point. The page scrolls towards the mouse – even while the mouse stands still."
+  },
+  "progressive": {
+    "message": "Progressive"
+  },
+  "progressiveHint": {
+    "message": "– the farther the mouse, the faster"
+  },
+  "steps": {
+    "message": "Steps"
+  },
+  "stepsHint": {
+    "message": "– fixed speed per zone"
+  },
+  "showIndicator": {
+    "message": "Show anchor and speed"
+  },
+  "deadZone": {
+    "message": "Dead zone"
+  },
+  "baseSpeed": {
+    "message": "Base speed"
+  },
+  "baseSpeedHint": {
+    "message": "Speed at 100 px distance."
+  },
+  "acceleration": {
+    "message": "Acceleration"
+  },
+  "accelerationHint": {
+    "message": "1 = linear; higher = finer near the anchor, much faster farther out."
+  },
+  "topSpeed": {
+    "message": "Top speed"
+  },
+  "curveSummary": {
+    "message": "Distance beyond the dead zone: $VALUE$",
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
+  },
+  "gaugeHint": {
+    "message": "The circle around the anchor grows with the speed; the dotted ring marks top speed."
+  },
+  "zoneWidth": {
+    "message": "Zone width"
+  },
+  "speeds": {
+    "message": "Speeds"
+  },
+  "speedsHint": {
+    "message": "Inside out, separated by commas. The active zone is highlighted."
+  },
+  "zoneError": {
+    "message": "Please enter 1 to 8 positive numbers, separated by commas."
+  },
+  "previewHint": {
+    "message": "Preview on light and dark backgrounds – move the mouse over it:"
+  },
+  "sectionDisabled": {
+    "message": "Disabled sites"
+  },
+  "enableAgain": {
+    "message": "Enable again"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyControl": {
+    "message": "Ctrl"
+  },
+  "keyMeta": {
+    "message": "Super"
+  },
+  "welcomeTitle": {
+    "message": "Hold to Scroll is ready"
+  },
+  "welcomeMove": {
+    "message": "+ move the mouse"
+  },
+  "welcomeDrag": {
+    "message": "drag the page"
+  },
+  "welcomeScroll": {
+    "message": "scroll – the farther, the faster"
+  },
+  "welcomeTry": {
+    "message": "No click needed. Try it right here on this page."
+  },
+  "welcomeToolbar": {
+    "message": "All settings are behind the toolbar button – there you can also change the keys or turn the add-on off for single sites."
+  },
+  "welcomeSettings": {
+    "message": "Open settings"
+  },
+  "welcomeTip": {
+    "message": "Shortcuts like Shift+A or Alt+← and Shift+click work as before: the mode only starts once the mouse moves."
+  },
+  "close": {
+    "message": "Close"
+  }
+}
