@@ -3,7 +3,11 @@
 A Firefox add-on: hold a key and move the mouse to scroll – no mouse click
 needed. Inspired by "Spacebar Drag", written from scratch.
 
-![Hold Shift to drag the page, hold Alt to scroll – the farther the mouse, the faster](docs/demo.gif)
+
+
+https://github.com/user-attachments/assets/86aa1f08-b488-4415-bb5f-e63ac36767ff
+
+
 
 **[Download the latest release](https://github.com/dannyqwertz/firefox-hold-to-scroll/releases/latest)** – signed `.xpi`, click it in Firefox to install.
 
