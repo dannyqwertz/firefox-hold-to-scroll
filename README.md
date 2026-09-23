@@ -3,11 +3,7 @@
 A Firefox add-on: hold a key and move the mouse to scroll – no mouse click
 needed. Inspired by "Spacebar Drag", written from scratch.
 
-
-
 https://github.com/user-attachments/assets/86aa1f08-b488-4415-bb5f-e63ac36767ff
-
-
 
 **[Download the latest release](https://github.com/dannyqwertz/firefox-hold-to-scroll/releases/latest)** – signed `.xpi`, click it in Firefox to install.
 
@@ -55,7 +51,7 @@ Hold to Scroll, with a live preview.
 ## Build
 
     npx web-ext lint
-    npx web-ext build        # → web-ext-artifacts/*.zip, without store/, docs/ and README.md
+    npx web-ext build        # → web-ext-artifacts/*.zip, without store/ and README.md
 
 Release versions of Firefox only install signed add-ons permanently. To sign
 it without publishing (unlisted), create API credentials at
@@ -86,7 +82,6 @@ published on addons.mozilla.org) and installs in any Firefox.
 | `_locales/` | English (default) and German translations |
 | `icons/` | Toolbar icons for light/dark themes, add-on icon |
 | `store/` | addons.mozilla.org listing texts and screenshots (not packaged) |
-| `docs/` | Demo animation for this README (not packaged) |
 
 ## License
 
